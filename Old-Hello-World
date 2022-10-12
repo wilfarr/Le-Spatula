@@ -1,0 +1,51 @@
+int val = 0;
+
+void setup() {
+  pinMode(8, OUTPUT);    // sets the digital pin 14 as output
+  
+}
+
+void loop() {
+  val = digitalRead(9);
+  if(val == 1){
+  digitalWrite(8, HIGH); // sets the digital pin 14 on
+  delay(500);            // waits for a second
+  digitalWrite(8, LOW);  // sets the digital pin 14 off
+  delay(500);            // waits for a second
+}
+}
+
+
+
+//Three Light:
+
+int val = 0;
+
+void setup() {
+  pinMode(8, OUTPUT);    // sets the digital pin 14 as output
+  pinMode(4, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(9, INPUT);
+  
+}
+
+void loop() {
+  val = digitalRead(9);
+  if(val == 1){
+  digitalWrite(8, HIGH); // sets the digital pin 14 on
+  delay(500);            // waits for a second
+  digitalWrite(8, LOW);  // sets the digital pin 14 off
+  delay(500);            // waits for a second
+
+  digitalWrite(4, HIGH); // sets the digital pin 14 on
+  delay(500);            // waits for a second
+  digitalWrite(4, LOW);  // sets the digital pin 14 off
+  delay(500);            // waits for a second
+
+  digitalWrite(7, HIGH); // sets the digital pin 14 on
+  delay(500);            // waits for a second
+  digitalWrite(7, LOW);  // sets the digital pin 14 off
+  delay(500);            // waits for a second
+  }
+
+}
