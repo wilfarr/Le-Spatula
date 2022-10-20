@@ -26,6 +26,8 @@ TMRpcm tmrpcm;
 
 void setup() {
 
+  //also need to include setup for declaring if pins are input/output etc...
+
   //setup for playing audio clips
   tmrpcm.speakerPin = 9;
   Serial.begin(9600);
@@ -59,6 +61,11 @@ if(ONButton == 1){
           
           if(check == 1){
               count++;
+	      
+	      //check if max score is reached
+	      if(count == 99){
+	      	mistake = 1;
+	      }
           }
           elseif(check == 0){
               mistake = 1;
@@ -72,6 +79,10 @@ if(ONButton == 1){
           
           if(check == 1){
               count++;
+	      //check if max score is reached
+	      if(count == 99){
+	      	mistake = 1;
+	      }
           }
           elseif(check == 0){
               mistake = 1;
@@ -85,6 +96,10 @@ if(ONButton == 1){
           
           if(check == 1){
               count++;
+	      //check if max score is reached
+	      if(count == 99){
+	      	mistake = 1;
+	      }
           }
           elseif(check == 0){
               mistake = 1;
@@ -93,7 +108,18 @@ if(ONButton == 1){
        
        //decrement time to perform tasks
        maxtime = maxtime - 100;
-    }  
+    }
+  
+  //if this point is reached, either by failure or by maxing out score to 99
+  
+  if(count == 99){
+  	//play audio clip of spongebob with a congratulatory reading of the 99 score count
+       tmrpcm.setVolume(6);
+       tmrpcm.play("maxscore.wav");
+  ]
+  elseif(count < 99){
+	//play audio clip saying the score reached based on what count variable currently is
+	XXXXXXXXXXXXXXXXXXX
   }
 }
 
@@ -132,7 +158,7 @@ pressIt(int success){
 	  success = 0;
           return success;
        }
-	}  
+     }  
        
        
   }
@@ -222,41 +248,42 @@ firmlyGraspIt(int success){
     }
 }
 
-    
 
 ///////////////////////////////////////
+
+
 //psuedo code
-Spatula-It pseudo-code
-Main(){
-   While(power == 1){
-  Read input until game start is signaled;
-  While(game start == true){
-    Randomize a number 1-3 and assign it to a variable;
-    If variable == 1{
-    call press it function
-}
-Otherwise, if variable == 2{
-call flip it function
-}
-Otherwise{
-call grip it function
-}
-If action successful: light green LED and add 1 to total score
-If action unsuccessful: light red LED and read out total score.
-}
-}
-Press it function(){
-Play audio clip saying “press it” from speaker
-If spatula is held in burger press orientation for more than 1.5 sec, return true
-If action is not completed return false
-}
-Flip it function(){
-Play audio clip saying “flip it” from speaker
-If accelerometer detects “jerking motion”, return true
-If action is not completed return false
-}
-Grip it function(){
-Play audio clip saying “grip it” from speaker
-If the spatulas handle button is pressed, return true
-If action is not completed return false
-}
+//Spatula-It pseudo-code
+//Main(){
+   //While(power == 1){
+  //Read input until game start is signaled;
+  //While(game start == true){
+    //Randomize a number 1-3 and assign it to a variable;
+    //If variable == 1{
+    //call press it function
+//}
+//Otherwise, if variable == 2{
+//call flip it function
+//}
+//Otherwise{
+//call grip it function
+//}
+//If action successful: light green LED and add 1 to total score
+//If action unsuccessful: light red LED and read out total score.
+//}
+//}
+//Press it function(){
+//Play audio clip saying “press it” from speaker
+//If spatula is held in burger press orientation for more than 1.5 sec, return true
+//If action is not completed return false
+//}
+//Flip it function(){
+//Play audio clip saying “flip it” from speaker
+//If accelerometer detects “jerking motion”, return true
+//If action is not completed return false
+//}
+//Grip it function(){
+//Play audio clip saying “grip it” from speaker
+//If the spatulas handle button is pressed, return true
+//If action is not completed return false
+//}
