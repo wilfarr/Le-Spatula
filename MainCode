@@ -35,6 +35,7 @@ void setup(){
   if (!SD.begin(SD_ChipSelectPin)) {
   Serial.println("SD fail");
   return;
+  }
 }
 
 void loop() {
