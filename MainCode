@@ -24,9 +24,10 @@ int handleSw = A7;
 //variable for use with playing audio from speaker
 TMRpcm tmrpcm;
 
-void setup() {
+void setup(){
 
   //also need to include setup for declaring if pins are input/output etc...
+  XXXXXXXXXXXXXXXXXXXX
 
   //setup for playing audio clips
   tmrpcm.speakerPin = 9;
@@ -34,7 +35,6 @@ void setup() {
   if (!SD.begin(SD_ChipSelectPin)) {
   Serial.println("SD fail");
   return;
-  
 }
 
 void loop() {
@@ -159,9 +159,7 @@ pressIt(int success){
           return success;
        }
      }  
-       
-       
-  }
+}
 
 //flip it function (returns 1 for success and 0 for failure)
 flipIt(int success){
@@ -212,7 +210,7 @@ flipIt(int success){
             success = 0;
             return success;
         }  
-   }
+ }
 
 //firmly grasp it function (returns 1 for success and 0 for failure)
 firmlyGraspIt(int success){
