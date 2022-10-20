@@ -152,10 +152,14 @@ pressIt(int success){
 	if(fsrReading > 50 && time < maxtime){  //if flex sensor reads good flex and timer is not up: success
           //Turn green LED on
           digitalWrite(greenLED, HIGH);
+	  delay(100);
+	  digitalWrite(greenLED, LOW);
           return success;
        }
        elseif(time > maxtime){ //failure
           digitalWrite(redLED, HIGH);
+	  delay(100);
+	  digitalWrite(redLED, LOW);
 	  success = 0;
           return success;
        }
@@ -204,10 +208,14 @@ flipIt(int success){
     
         if(avg > 1000 && time < maxtime){ //if accelerometer detects a succesful jerk and time is not up: success
             digitalWrite(greenLED, HIGH);
+	    delay(100);
+	    digitalWrite(greenLED, LOW);
             return success;
         }
         elseif(time > maxtime){ //failure
             digitalWrite(redLED, HIGH);
+	    delay(100);
+	    digitalWrite(redLED, LOW);
             success = 0;
             return success;
         }  
