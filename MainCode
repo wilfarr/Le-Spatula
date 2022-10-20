@@ -4,20 +4,22 @@
 #include "TMRpcm.h"
 #include "SPI.h"
 
-//(All pins that i "assigned" are all placeholders/subject to change) - will
+// (All pins that i "assigned" are all placeholders/subject to change) - will
 
+inc count = 0;
 int fsrAnalogPin = 0;
-int count = 0;
-int redLED = 2;
+int redLED = 1;
+int greenLED = 2;
+int powerpin = 3;
 const int maxtime = 60000;
 
 //set pins for accelerometer
-const int xInput = A0;
-const int yInput = A1;
-const int zInput = A2;
+const int xInput = A4;
+const int yInput = A5;
+const int zInput = A6;
 
 //set pin to read button press
-int handleSw = A3;
+int handleSw = A7;
 
 //variable for use with playing audio from speaker
 TMRpcm tmrpcm;
@@ -36,9 +38,12 @@ void setup() {
 void loop() {
 //wait for game to turn on
 
+//read state of ON button
+int ONButton;
+ONButton = digitalRead(powerpin);
 
 //start the game
-if(ONbutton==1){
+if(ONButton == 1){
 
     int mistake = 0; //create a way for loop to end if a mistake is made
 
@@ -102,27 +107,34 @@ pressIt(int success){
        //Begin countdown
        long int tstart = millis();
        
+       //calculate how much time has passed
        long int tend = millis();
        long int time = tend - tstart;
    
-       while(time < maxtime){  //wait for fsr value to change
-          while(int fsrReading == 0){
-              fsrReading = analogRead(fsrAnalogPin);
+       while(time < maxtime){  //wait for fsr value to change until time is up
        
-       }  
-       
-       
-       
-       if(time > maxtime){  //if they took too long
-          //Turn red LED on
-          digitalWrite(redLED, HIGH);
-          success == 0;
-          return success;
-       }
-       else{
+       	int fsrReading = 0;
+       	while(fsrReading == 0){ //read fsr pin until flex is detected
+              	fsrReading = analogRead(fsrAnalogPin);
+		}
+	
+	//recalculate how much time has passed
+	tend = millis();
+        time = tend - tstart;
+	
+	if(fsrReading > 50 && time < maxtime){  //if flex sensor reads good flex and timer is not up: success
+          //Turn green LED on
           digitalWrite(greenLED, HIGH);
           return success;
        }
+       elseif(time > maxtime){ //failure
+          digitalWrite(redLED, HIGH);
+	  success = 0;
+          return success;
+       }
+	}  
+       
+       
   }
 
 //flip it function (returns 1 for success and 0 for failure)
@@ -161,14 +173,15 @@ flipIt(int success){
    
         int avg = (xRaw + yRaw + zRaw)/3;
    
+   	//recalculate how much time has passed
         tend = millis();
         time = tend - tstart;
     
-        if(avg > 1000 && time < maxtime){
+        if(avg > 1000 && time < maxtime){ //if accelerometer detects a succesful jerk and time is not up: success
             digitalWrite(greenLED, HIGH);
             return success;
         }
-        elseif(time > maxtime){
+        elseif(time > maxtime){ //failure
             digitalWrite(redLED, HIGH);
             success = 0;
             return success;
@@ -193,14 +206,15 @@ firmlyGraspIt(int success){
         int buttonState;
         buttonState = digitalRead(buttonPin);
         
+	//recalculate how much time has passed
         tend = millis();
         time = tend - tstart
         
-        if(buttonState == HIGH && time < maxtime){
+        if(buttonState == HIGH && time < maxtime){ //if handle is firmly grasped and time is not up: success
             digitalWrite(greenLED, HIGH);
             return success;
         }
-        elseif(time > maxtime){
+        elseif(time > maxtime){ //failure
             digitalWrite(redLED, HIGH);
             success = 0;
             return success;
