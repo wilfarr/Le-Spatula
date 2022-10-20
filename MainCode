@@ -36,7 +36,7 @@ voidloop() {
 
 //read state of ON button
 int ONButton;
-ONButton = digitalRead(powerpin);
+ONButton = 1; // digitalRead(powerpin)
 
 //start the game
 if(ONButton == 1){
